@@ -282,16 +282,8 @@ public class TownyFormatter {
 	 */
 	public static StatusScreen getStatus(Town town, CommandSender sender) {
 		boolean isSenderAdmin = TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(sender);
-		boolean isSenderResidentOfTown = false;
+		boolean isSenderResidentOfTown = sender instanceof Player player && town.hasResident(player);
         
-        if (sender instanceof Player player) {
-            Resident resident = TownyAPI.getInstance().getResident(player);
-            
-        if (resident != null && resident.hasTown()) {
-            isSenderResidentOfTown = resident.getTownOrNull().equals(town);
-            }
-        }
-
 		final Translator translator = Translator.locale(sender);
 		StatusScreen screen = new StatusScreen(sender);
 		TownyWorld world = town.getHomeblockWorld();
