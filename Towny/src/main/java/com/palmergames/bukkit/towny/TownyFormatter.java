@@ -282,7 +282,16 @@ public class TownyFormatter {
 	 */
 	public static StatusScreen getStatus(Town town, CommandSender sender) {
 		boolean isSenderAdmin = TownyUniverse.getInstance().getPermissionSource().isTownyAdmin(sender);
-		
+		        boolean isSenderResidentOfTown = false;
+        
+        if (sender instanceof Player player) {
+            Resident resident = TownyAPI.getInstance().getResident(player);
+            
+        if (resident != null && resident.hasTown()) {
+            isSenderResidentOfTown = resident.getTownOrNull().equals(town);
+            }
+        }
+
 		final Translator translator = Translator.locale(sender);
 		StatusScreen screen = new StatusScreen(sender);
 		TownyWorld world = town.getHomeblockWorld();
@@ -352,10 +361,15 @@ public class TownyFormatter {
 		// Only display the remaining fields if town is not ruined
 		} else {
 			// | Bank: 534 coins
-			if (TownyEconomyHandler.isActive() && (!TownySettings.isHideTownBalanceEnabled() || isSenderAdmin))
-				MoneyUtil.addTownMoneyComponents(town, translator, screen);
+				if (TownyEconomyHandler.isActive() 
+                && (!TownySettings.isHideTownBalanceEnabled()
+                    || isSenderAdmin 
+                    || isSenderResidentOfTown))
+            {        
+                MoneyUtil.addTownMoneyComponents(town, translator, screen);
+            }
 
-			// Mayor: MrSand
+            // Mayor: MrSand
 			if (town.getMayor() != null) {
 				screen.addComponentOf("mayor", colourKeyValue(translator.of("rank_list_mayor"), town.getMayor().getFormattedName()),
 					HoverEvent.showText(translator.component("registered_last_online", registeredFormat.format(town.getMayor().getRegistered()), lastOnlineFormatIncludeYear.format(town.getMayor().getLastOnline()))
