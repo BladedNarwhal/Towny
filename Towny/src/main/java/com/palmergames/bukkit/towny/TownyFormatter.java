@@ -353,13 +353,8 @@ public class TownyFormatter {
 		// Only display the remaining fields if town is not ruined
 		} else {
 			// | Bank: 534 coins
-				if (TownyEconomyHandler.isActive() 
-                && (!TownySettings.isHideTownBalanceEnabled()
-                    || isSenderAdmin 
-                    || isSenderResidentOfTown))
-            {        
-                MoneyUtil.addTownMoneyComponents(town, translator, screen);
-            }
+			if (TownyEconomyHandler.isActive() && (!TownySettings.isHideTownBalanceEnabled() || isSenderAdmin || isSenderResidentOfTown))
+				MoneyUtil.addTownMoneyComponents(town, translator, screen);
 
             // Mayor: MrSand
 			if (town.getMayor() != null) {
