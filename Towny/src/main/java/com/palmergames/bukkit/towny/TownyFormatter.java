@@ -356,7 +356,7 @@ public class TownyFormatter {
 			if (TownyEconomyHandler.isActive() && (!TownySettings.isHideTownBalanceEnabled() || isSenderAdmin || isSenderResidentOfTown))
 				MoneyUtil.addTownMoneyComponents(town, translator, screen);
 
-            // Mayor: MrSand
+			// Mayor: MrSand
 			if (town.getMayor() != null) {
 				screen.addComponentOf("mayor", colourKeyValue(translator.of("rank_list_mayor"), town.getMayor().getFormattedName()),
 					HoverEvent.showText(translator.component("registered_last_online", registeredFormat.format(town.getMayor().getRegistered()), lastOnlineFormatIncludeYear.format(town.getMayor().getLastOnline()))
